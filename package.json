@@ -1,6 +1,6 @@
 {
   "name": "hyperapp-nestable",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Nest apps in apps. Let's you use a stateful-components-architecture with hyperapp",
   "main": "dist/index.js",
   "scripts": {
