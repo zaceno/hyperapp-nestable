@@ -103,7 +103,7 @@ the event handler. The child should implement some sort of handling of these pro
         },
         events: {
             ...,
-            'parent:props': (state, actions, props) => {
+            'parent:update': (state, actions, props) => {
                 actions.setMax(props.max)
                 actions.setMin(props.min)
             }
