@@ -1,4 +1,4 @@
-# hyperap-nestable
+# hyperapp-nestable
 
 This function lets you define components you can use in your views, which are
 stateful, i e, they embed their own hyperapp app. 
