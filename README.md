@@ -46,7 +46,7 @@ Add this to the `<head>` of your page:
 
 this will export `nestable` in the global scope.
 
-## Define Stateful COmponents (nestable apps)
+## Define Stateful Components (nestable apps)
 
 Define a component, by passing hyperapp's `app` as first argument into `nestable`,
 and as the second argument an app-definition function.
