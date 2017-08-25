@@ -84,6 +84,9 @@ defined component:
 
 Note: it is important that stateful components are keyed (unique keys for siblings!)
 
+Note: It is not possible for a nestable component to have children injected from a parent. 
+
+
 ## Communication between apps ##
 
 
