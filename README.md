@@ -121,7 +121,7 @@ view, there is a function bound to `onfoo`, then this function will be called wh
         actions: {
             increment: (state, actions) => update => {
                 update({value: state.value + 1})
-                emit('self:changed', state.value)
+                emit('self:change', state.value)
             }
         }
     }))
