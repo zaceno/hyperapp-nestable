@@ -1,3 +1,9 @@
+***NOTICE***  *This package is no longer maintained*
+
+The last compatible version of hyperapp is probably 0.12.0. Later changes break this package, and I have no plans currently to update it. If you're using it, and that's a bummer for you, let me know please! We can work something out :)
+
+----
+
 # hyperapp-nestable
 
 This function lets you define components you can use in your views, which are
