@@ -1,8 +1,7 @@
 export default function (state, actions, view, tagname) {
-  tagname = tagname || 'x-'
   actions._$ = function (x) { return x }
   return function (props) {
-      return h('x-', {
+      return h(tagname || 'x-', {
           oncreate: function (el) {
               var _actions = app(state, actions, view, el)
               el._$ = _actions._$
