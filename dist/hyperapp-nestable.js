@@ -1,0 +1,2 @@
+!function(n,e){"object"==typeof exports&&"undefined"!=typeof module?module.exports=e():"function"==typeof define&&define.amd?define(e):n.nestable=e()}(this,function(){"use strict";return function(n,e,t,i){return i=i||"x-",e._$=function(n){return n},function(i){return h("x-",{oncreate:function(o){var u=app(n,e,t,o);o._$=u._$,o._$(i),u.init&&u.init(),o._$$=u.uninit},onupdate:function(n){n._$(i)},onremove:function(n){n._$$&&n._$$()}})}}});
+//# sourceMappingURL=hyperapp-nestable.js.map

@@ -1,10 +1,13 @@
 {
   "name": "hyperapp-nestable",
   "version": "0.0.2",
-  "description": "Nest apps in apps. Let's you use a stateful-components-architecture with hyperapp",
-  "main": "dist/index.js",
+  "description": "Stateful components in Hyperapp",
+  "main": "dist/hyperapp-nestable.js",
+  "module": "src/index.js",
   "scripts": {
-    "build": "browserify src/index.js --standalone nestable | uglifyjs  --mangle --compress > dist/index.js"
+    "umd": "rollup src/index.js -f umd -n nestable -m -o dist/hyperapp-nestable.js",
+    "minify": "uglifyjs dist/hyperapp-nestable.js -o dist/hyperapp-nestable.js -mc --source-map includeSources,url=hyperapp-nestable.js.map",
+    "build": "npm run umd && npm run minify"
   },
   "repository": {
     "type": "git",
@@ -17,8 +20,7 @@
   },
   "homepage": "https://github.com/zaceno/hyperapp-nestable#readme",
   "devDependencies": {
-    "browserify": "^14.4.0",
-    "uglify-es": "^3.0.23"
-  },
-  "dependencies": {}
+    "uglify-js": "^3.2.2",
+    "rollup": "^0.52.2"
+  }
 }
