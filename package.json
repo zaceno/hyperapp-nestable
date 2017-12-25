@@ -22,5 +22,8 @@
   "devDependencies": {
     "uglify-js": "^3.2.2",
     "rollup": "^0.52.2"
+  },
+  "peerDependencies": {
+    "hyperapp": "^0.18.0"
   }
 }
