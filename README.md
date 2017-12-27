@@ -84,6 +84,8 @@ app({}, {}, _ => (
 
 ```
 
+([Live example](https://codepen.io/zaceno/pen/eygwdV))
+
 The above example will do exactly what you expect, and render a functioning counter after the heading.
 
 ## Component's tagName
