@@ -89,7 +89,85 @@ app({}, {}, _ => (
 The above example will do exactly what you expect, and render a functioning counter after the heading.
 
 ## Component's tagName
-...TBW
+
+If you look at the html of the app example above, you'll see it looks like:
+
+```html
+<div class="app">
+  <h1>Look, a counter:</h1>
+  <x->
+    <p class="counter">
+      <button>-</button>
+      0
+      <button>+</button>
+    </p>
+  </x->
+</div>
+```
+
+Notice the `<x->` element in there. That element corresponds to the vnode in the main app's view, where the counter's view is rendered. It's necessary as a means to "connect" the two vtrees. But the tag name `x-` is just the default. If you want it to be something more descriptive, we might call it `counter-` (the dash on the end is just to make it clear it's not a real html element). You would do that by giving it as the fourth argument to the `nestable` function:
+
+```js
+const Counter = nestable(
+  initialCounterState,
+  counterActions,
+  counterView,
+  'counter-'
+)
+```
+
+You could make the tag a regular html tag such as `div` or `section` too. You may want that for CSS-reasons. But you can't yet sett any attributes such as `class` or `id` on it.
+
+## Passing props to a component
+
+You can control the state & behavior of your component from the outside, by passing props to it, just the same as for a regular, stateless component:
+
+```jsx
+<AvatarEditor
+  userid={state.currentUser.id}
+  ondone={actions.currentUser.refresh}
+/>
+```
+
+Props passed to components this way, will be set on the component instance's *state*. Note that this may include functions like the `ondone` prop in the example above.
+
+This means, that when the parent app (re)renders, it will set/update state properties of the component app, causing it to rerender as well (which is exactly what you want). However, actions in the component can only touch the component's own state, and will only cause the components tree to rerender (benefits performance, although it's not likely noticable).
+
+### Default values for props
+If you need some props to have default values when no value is given, simply declare those defaults in the components initial state.
+
+## Nestable component lifecycle
+
+If you add an action called `init` to your component, this action will be called when the component is first rendered. You may need this to set something up with browser API's. Another reason might be to copy "initial" values (passed as props) to "running" values.
+
+Such as if you want your `Counter` component to accept a starting value as a prop, you don't want the actual value to change when whatever was the basis for the starting value changes. So you could implement the counter this way:
+
+```js
+
+const Counter = nestable(
+  
+  //INITIAL STATE
+  {
+    start: 0 // default start value
+  },
+  
+  //ACTIONS
+  {
+    init: _ => state => ({value: state.start}),
+    up: _ => state => ({value: state.value + 1}),
+    down: _ => state => ({value: state.value - 1}),
+  },
+  
+  //VIEW
+  ...
+)
+```
+
+Now, the counter will start at the value it is given the first time it's rendered, but when that value changes, it will not affect the value of the counter.
+
+
+
+
 
 ## Example
 
