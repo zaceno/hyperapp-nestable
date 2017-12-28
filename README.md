@@ -118,9 +118,9 @@ const Counter = nestable(
 
 You could make the tag a regular html tag such as `div` or `section` too. You may want that for CSS-reasons. But you can't yet sett any attributes such as `class` or `id` on it.
 
-## Passing props to a component
+## Component properties
 
-You can control the state & behavior of your component from the outside, by passing props to it, just the same as for a regular, stateless component:
+You can pass props to a component (just like any other). When you do, these values are set on the state of your component, like this:
 
 ```jsx
 <AvatarEditor
@@ -129,14 +129,14 @@ You can control the state & behavior of your component from the outside, by pass
 />
 ```
 
-Props passed to components this way, will be set on the component instance's *state*. Note that this may include functions like the `ondone` prop in the example above.
-
 This means, that when the parent app (re)renders, it will set/update state properties of the component app, causing it to rerender as well (which is exactly what you want). However, actions in the component can only touch the component's own state, and will only cause the components tree to rerender (benefits performance, although it's not likely noticable).
 
 ### Default values for props
 If you need some props to have default values when no value is given, simply declare those defaults in the components initial state.
 
 ## Nestable component lifecycle
+
+### The special action called `init`
 
 If you add an action called `init` to your component, this action will be called when the component is first rendered. You may need this to set something up with browser API's. Another reason might be to copy "initial" values (passed as props) to "running" values.
 
@@ -165,12 +165,32 @@ const Counter = nestable(
 
 Now, the counter will start at the value it is given the first time it's rendered, but when that value changes, it will not affect the value of the counter.
 
+Here's a [live example](https://codepen.io/zaceno/pen/ypMLPp)
 
+### The special action called `uninit`
 
+Corresponding to `init`, if you need something done when the component is destroyed, you can put in an action named `uninit`
 
+## Keys
 
-## Example
+Because these components are stateful, it becomes important to control when components such as these are created/destroyed or repositioned among siblings. You do this the regular way, by assigning a unique `key` property to the component.
 
-See here for a (somewhat contrived) example of how it could be used:
+```jsx
+...
+{state.counters.ids.map(counterId => (
+  <Counter start={state.counters.initialVal} key={counterId} />
+)}
+...
+```
+Note that the `key` prop is special. It is *not* set in the component's state.
+
+## Example of All the things
+
+See here for a (somewhat contrived) example, demonstrating, among some things:
+
+- Updating component state from parent app, via props
+- Initializing components
+- Parent app listening to callbacks from component
+- Using keys to ensure the state is not reset when DOM is reordered
 
 https://codepen.io/zaceno/pen/goYOML?editors=0010
