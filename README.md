@@ -169,26 +169,6 @@ Here's a [live example](https://codepen.io/zaceno/pen/ypMLPp)
 
 Corresponding to `init`, if you need something done when the component is destroyed, you can put in an action named `uninit`
 
-## Keys
-
-Because these components are stateful, it becomes important to control when components such as these are created/destroyed or repositioned among siblings. You do this the regular way, by assigning a unique `key` property to the component.
-
-```jsx
-...
-{state.counters.ids.map(counterId => (
-  <Counter start={state.counters.initialVal} key={counterId} />
-)}
-...
-```
-Note that the `key` prop is special. It is *not* set in the component's state.
-
-## Example of All the things
-
-See here for a (somewhat contrived) example, demonstrating, among some things:
-
-- Updating component state from parent app, via props
-- Initializing components
-- Parent app listening to callbacks from component
-- Using keys to ensure the state is not reset when DOM is reordered
+Here is a more complex, albeit somewhat contrived, example, demonstrating component lifecycle.
 
 https://codepen.io/zaceno/pen/goYOML?editors=0010
