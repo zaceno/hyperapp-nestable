@@ -1,9 +1,7 @@
 
 # hyperapp-nestable
 
-The answer to the question: "How do I make components with local state, like React's Object components, in Hyperapp?"
-
-Docs are a work in progress...
+- A tiny wrapper around your app, that lets you embedd apps within apps, *as if they were components*. Effectively answering the age-old question: "How do I make components with local state, like React's Object components, in Hyperapp?"
 
 ## Install
 
