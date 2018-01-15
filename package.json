@@ -1,6 +1,6 @@
 {
   "name": "hyperapp-nestable",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "Stateful components in Hyperapp",
   "main": "dist/hyperapp-nestable.js",
   "module": "src/index.js",
