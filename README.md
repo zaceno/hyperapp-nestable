@@ -60,7 +60,7 @@ const Counter = nestable(
   
   //VIEW
   (state, actions) => (
-    <p class="counter">
+    <p>
       <button onclick={actions.down}>-</button>
       {state.value}
       <button onclick={actions.up}>+</button>
@@ -86,7 +86,7 @@ app({}, {}, _ => (
 
 The above example will do exactly what you expect, and render a functioning counter after the heading.
 
-## Component's tagName
+## Component's Tagname
 
 If you look at the html of the app example above, you'll see it looks like:
 
@@ -114,7 +114,8 @@ const Counter = nestable(
 )
 ```
 
-You could make the tag a regular html tag such as `div` or `section` too. You may want that for CSS-reasons. But you can't yet sett any attributes such as `class` or `id` on it.
+You could make the tag a regular html tag such as `div` or `section` too. You may want that for CSS-reasons.
+
 
 ## Component properties
 
@@ -131,6 +132,20 @@ This means, that when the parent app (re)renders, it will set/update state prope
 
 ### Default values for props
 If you need some props to have default values when no value is given, simply declare those defaults in the components initial state.
+
+### Special properties
+
+#### `key`
+
+They key property is set on the component's tag (not the top node of the component's `view`). This can be very important when you have components as siblings to eachother in the virtual dom.
+
+#### `class` & `id`
+
+These are set on the component's tag. Mainly useful for css purposes. 
+
+#### `oncreate`, `onupdate`, `ondestroy`
+
+These lifecycle events are first use for managing the component, but afterward, will be called just as usual, for the component's node.
 
 ## Nestable component lifecycle
 
@@ -169,6 +184,13 @@ Here's a [live example](https://codepen.io/zaceno/pen/ypMLPp)
 
 Corresponding to `init`, if you need something done when the component is destroyed, you can put in an action named `uninit`
 
-Here is a more complex, albeit somewhat contrived, example, demonstrating component lifecycle.
+Here is a more complex, while  somewhat contrived demonstrating many of the features mentioned here:
+
+- passing props
+- custom tag name (for styling)
+- setting keys for using transitions
+- initializing/uninitializing components
+
 
 https://codepen.io/zaceno/pen/goYOML?editors=0010
+
