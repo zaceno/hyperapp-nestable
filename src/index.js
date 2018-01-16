@@ -16,6 +16,7 @@ export default function (state, actions, view, tagname) {
                 el._$ = _actions._$
                 el._$$ = _actions.uninit
                 el._$(props)
+                if (_actions.init) _actions.init()
                 if (props.oncreate) props.oncreate(el)
             },
 
