@@ -5,6 +5,7 @@ export default function (state, actions, view, tagname) {
     actions._$ = function (x) { return x }
 
     return function (props) {
+        props.children = children;
         return h(tagname || 'x-', {
 
             key:    props.key,
