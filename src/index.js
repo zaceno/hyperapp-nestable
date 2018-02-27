@@ -1,16 +1,18 @@
 import {h, app} from 'hyperapp'
 
-export default function (state, actions, view, tagname) {
+export default function (state, actions, _view, tagname) {
 
     actions._$ = function (x) { return x }
 
     return function (props) {
+        let view = (state, actions) => {
+            if(typeof _view(state, actions) === 'function')
+                return _view(state, actions)(props, children)
+
+            return _view(state, actions);
+        }
+        
         return h(tagname || 'x-', {
-
-            key:    props.key,
-            class:  props.class,
-            id:     props.id,
-
             oncreate: function (el) {
                 var _actions = app(state, actions, view, el)
                 el._$ = _actions._$
