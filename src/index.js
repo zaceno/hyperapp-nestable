@@ -1,34 +1,41 @@
 import {h, app} from 'hyperapp'
 
-export default function (state, actions, view, tagname) {
-
-    actions._$ = function (x) { return x }
-
-    return function (props) {
+export default 
+function nestable (state, actions, view, tagname) {
+    actions._$r = function () {return {}}
+    return function (props, children) {
         return h(tagname || 'x-', {
-
-            key:    props.key,
-            class:  props.class,
-            id:     props.id,
-
+            key: props.key,
+            id: props.id,
+            class: props.class,
             oncreate: function (el) {
-                var _actions = app(state, actions, view, el)
-                el._$ = _actions._$
-                el._$$ = _actions.uninit
-                el._$(props)
-                if (_actions.init) _actions.init()
-                if (props.oncreate) props.oncreate(el)
+                var wired = app(
+                    state,
+                    actions,
+                    function (s, a) {
+                        var v = view(s, a)
+                        if (typeof v === 'function') v = v(el._$p, el._$c)
+                        return v
+                    },
+                    el
+                )
+                el._$p = props
+                el._$c = children
+                el._$r = wired._$r
+                el._$u = wired.uninit
+                wired.init && wired.init(props)
+                props.oncreate && props.oncreate(el)
             },
-
-            onupdate: function (el, oldProps) {
-                el._$(props)
-                if (props.onupdate) props.onupdate(el, oldProps)
+            onupdate: function (el) {
+                el._$p = props
+                el._$c = children
+                el._$r()
+                props.onupdate && props.onupdate(el)
             },
-
             ondestroy: function (el) {
-                if (el._$$) el._$$()
-                if (props.ondestroy) props.ondestroy(el)
+                el._$u && el._$u()
             }
         })
-    }
+    }    
 }
+

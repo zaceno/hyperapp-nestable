@@ -117,21 +117,29 @@ const Counter = nestable(
 You could make the tag a regular html tag such as `div` or `section` too. You may want that for CSS-reasons.
 
 
-## Component properties
+## Component properties & children
 
-You can pass props to a component (just like any other). When you do, these values are set on the state of your component, like this:
+You can pass props and children to a component (just like any other). In order for your view to be aware of them, return a component from your view.
 
 ```jsx
-<AvatarEditor
-  userid={state.currentUser.id}
-  ondone={actions.currentUser.refresh}
-/>
+const MyComponent = nestable(
+  //STATE
+  {...},
+
+  //ACTIONS
+  {...},
+
+  //VIEW
+  (state, actions) => (props, children) => (
+    <div class={props.class}>
+      <h1>{state.foo}</h1>
+      {children}
+      <button onclick={actions.bar}>Go</button>
+    </
+  )
+)
+
 ```
-
-This means, that when the parent app (re)renders, it will set/update state properties of the component app, causing it to rerender as well (which is exactly what you want). However, actions in the component can only touch the component's own state, and will only cause the components tree to rerender (benefits performance, although it's not likely noticable).
-
-### Default values for props
-If you need some props to have default values when no value is given, simply declare those defaults in the components initial state.
 
 ### Special properties
 
@@ -151,7 +159,7 @@ These lifecycle events are first use for managing the component, but afterward, 
 
 ### The special action called `init`
 
-If you add an action called `init` to your component, this action will be called when the component is first rendered. You may need this to set something up with browser API's. Another reason might be to copy "initial" values (passed as props) to "running" values.
+If you add an action called `init` to your component, this action will be called when the component is first rendered. It will be passed the component's props as its first argument.
 
 Such as if you want your `Counter` component to accept a starting value as a prop, you don't want the actual value to change when whatever was the basis for the starting value changes. So you could implement the counter this way:
 
@@ -160,13 +168,11 @@ Such as if you want your `Counter` component to accept a starting value as a pro
 const Counter = nestable(
   
   //INITIAL STATE
-  {
-    start: 0 // default start value
-  },
+  { value: 0 },
   
   //ACTIONS
   {
-    init: _ => state => ({value: state.start}),
+    init: props => ({value: props.initial || 0}),
     up: _ => state => ({value: state.value + 1}),
     down: _ => state => ({value: state.value - 1}),
   },
@@ -184,13 +190,7 @@ Here's a [live example](https://codepen.io/zaceno/pen/ypMLPp)
 
 Corresponding to `init`, if you need something done when the component is destroyed, you can put in an action named `uninit`
 
-Here is a more complex, while  somewhat contrived demonstrating many of the features mentioned here:
-
-- passing props
-- custom tag name (for styling)
-- setting keys for using transitions
-- initializing/uninitializing components
-
+Here is a more complex, while  somewhat contrived demonstrating many of the features mentioned here.
 
 https://codepen.io/zaceno/pen/bajpvO?editors=0011
 
