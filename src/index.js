@@ -34,6 +34,11 @@ function nestable (state, actions, view, tagname) {
             },
             ondestroy: function (el) {
                 el._$u && el._$u()
+            },
+            onremove: function (el, done) {
+               if (!props.onremove) return done()
+
+               props.onremove(el, done)
             }
         })
     }    
