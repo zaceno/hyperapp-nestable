@@ -1,3 +1,4 @@
+This project is only compatible with hyperapp v1, and I do not intend to maintain it any longer. Hence, I am archiving it.
 
 # hyperapp-nestable
 
